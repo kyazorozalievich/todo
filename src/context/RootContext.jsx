@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToDoContext } from '.';
 
 const RootContext = ({children}) => {
-    const [text, setText] = useState([])
+    const [toDo, setToDo] = useState([])
+    const getAll = ()=> {
+        let  res = JSON.parse(localStorage.getItem('todo')) || []
+        setToDo(res)
+    }
+
+    useEffect(()=> {
+        getAll()
+    },[])
     return (
         <ToDoContext.Provider value={{
-            text, 
-            setText,
+            toDo, 
+            setToDo,
         }}>
             {children}
         </ToDoContext.Provider>
